@@ -1,4 +1,4 @@
-function loco(){
+function load(){
     gsap.registerPlugin(ScrollTrigger);
 
 // Using Locomotive Scroll from Locomotive https://github.com/locomotivemtl/locomotive-scroll
@@ -10,7 +10,7 @@ const locoScroll = new LocomotiveScroll({
 // each time Locomotive Scroll updates, tell ScrollTrigger to update too (sync positioning)
 locoScroll.on("scroll", ScrollTrigger.update);
 
-// tell ScrollTrigger to use these proxy methods for the "#main" element since Locomotive Scroll is hijacking things
+// tell ScrollTrigger to use these proxy methods for the ".smooth-scroll" element since Locomotive Scroll is hijacking things
 ScrollTrigger.scrollerProxy("#main", {
   scrollTop(value) {
     return arguments.length ? locoScroll.scrollTo(value, 0, 0) : locoScroll.scroll.instance.scroll.y;
@@ -22,110 +22,100 @@ ScrollTrigger.scrollerProxy("#main", {
   pinType: document.querySelector("#main").style.transform ? "transform" : "fixed"
 });
 
+
+
+
+
 // each time the window updates, we should refresh ScrollTrigger and then update LocomotiveScroll. 
 ScrollTrigger.addEventListener("refresh", () => locoScroll.update());
 
 // after everything is set up, refresh() ScrollTrigger and update LocomotiveScroll because padding may have been added for pinning, etc.
 ScrollTrigger.refresh();
 
-}
-loco()
 
-
+};
+load();
 gsap.to("#page>video",{
-    scrollTrigger:{
-        trigger:`#page>video`,
-        start:`2% top`,
-        end:`bottom top`,
-        scroller:`#main`
-    },
-    onStart:()=>{
-        document.querySelector("#page>video").play()
-    }
+  ScrollTrigger:{
+    trigger:"#page>video",
+    start:`2% top`,
+    end:`bottom top`,
+    markers:true,
+    scroller:`#main`
+    
+  },
+  onStart:()=>{
+    document.querySelector("#page>video").play();
+  }
 })
-
 
 gsap.to("#page",{
-    scrollTrigger:{
-        trigger:`#page`,
-        start:`top top`,
-        end:`bottom top`,
-        scroller:`#main`,
-        pin:true
-    }
+  ScrollTrigger:{
+    trigger:"#page",
+    start:`top top`,
+    end:`bottom top`,
+   pin:true,
+    scroller:`#main`
+    
+  }
+
 })
-
-
 gsap.to("#page-bottom",{
-    scrollTrigger:{
-        trigger:`#page-bottom`,
-        start:`5% top`,
-        end:`bottom top`,
-        scroller:`#main`,
-        scrub:.5,
-    },
-    opacity:0
+  ScrollTrigger:{
+    trigger:"#page-bottom",
+    start:`5% top`,
+    end:`bottom top`,
+   
+    scroller:`#main`
+    
+  },opacity:0
+
 })
-
-
-
 var tl = gsap.timeline({
-    scrollTrigger:{
-        trigger:`#page1`,
-        start:`top top`,
-        scrub:1,
-        scroller:`#main`,
-        pin:true
-    }
+  scrollTrigger:{
+      trigger:`#page1`,
+      start:`top top`,
+      scrub:1,
+      scroller:`#main`,
+      pin:true
+  }
 })
 
 
 tl.to("#page1>h1",{
-    top:`-50%`
+  top:`-50%`
 })
-
-
-
-
-
-
 var tl1 = gsap.timeline({
-    scrollTrigger:{
-        trigger:`#page2`,
-        start:`top top`,
-        scrub:1,
-        scroller:`#main`,
-        pin:true
-    }
+  scrollTrigger:{
+      trigger:`#page2`,
+      start:`top top`,
+      scrub:1,
+      scroller:`#main`,
+      pin:true
+  }
 })
 
 
 tl1.to("#page2>h1",{
-    top:`-50%`
+  top:`-50%`
 })
-
-
-
-
 var tl2 = gsap.timeline({
-    scrollTrigger:{
-        trigger:`#page4`,
-        start:`top top`,
-        scrub:1,
-        scroller:`#main`,
-        pin:true
-    }
+  scrollTrigger:{
+      trigger:`#page4`,
+      start:`top top`,
+      scrub:1,
+      scroller:`#main`,
+      pin:true
+  }
 })
 
 
 tl2.to("#page4>#center-page4",{
-    top:`-50%`
+  top:`-50%`
 })
 
-
-
 function canvas(){
-    const canvas = document.querySelector("#page7>canvas");
+  const canvas = document.querySelector("#page7>canvas");
 const context = canvas.getContext("2d");
 
 canvas.width = window.innerWidth;
@@ -140,6 +130,7 @@ window.addEventListener("resize", function () {
 
 function files(index) {
   var data = `
+   
   https://www.apple.com/105/media/us/apple-vision-pro/2023/7e268c13-eb22-493d-a860-f0637bacb569/anim/360/large/0000.jpg
   https://www.apple.com/105/media/us/apple-vision-pro/2023/7e268c13-eb22-493d-a860-f0637bacb569/anim/360/large/0001.jpg
   https://www.apple.com/105/media/us/apple-vision-pro/2023/7e268c13-eb22-493d-a860-f0637bacb569/anim/360/large/0002.jpg
@@ -362,7 +353,7 @@ gsap.to(imageSeq, {
   ease: `none`,
   scrollTrigger: {
     scrub: 0.15,
-    trigger: `#page7>canvas`,
+    trigger: `canvas`,
     //   set start end according to preference
     start: `top top`,
     end: `600% top`,
@@ -399,7 +390,7 @@ function scaleImage(img, ctx) {
 }
 ScrollTrigger.create({
 
-  trigger: "#page7>canvas",
+  trigger: "canvas",
   pin: true,
   // markers:true,
   scroller: `#main`,
@@ -409,8 +400,6 @@ ScrollTrigger.create({
 });
 }
 canvas();
-
-
 
 function canvas1(){
   const canvas = document.querySelector("#page18>canvas");
@@ -523,9 +512,6 @@ end: `80% top`,
 });
 }
 canvas1();
-
-
-
 var tl3 = gsap.timeline({
   scrollTrigger:{
       trigger:`#page21`,
@@ -540,7 +526,6 @@ var tl3 = gsap.timeline({
 tl3.to("#page21>#troff",{
   opacity:0
 })
-
 var tl4 = gsap.timeline({
   scrollTrigger:{
       trigger:`#page22`,
@@ -555,9 +540,6 @@ var tl4 = gsap.timeline({
 tl4.to("#page22>#snroff",{
   opacity:0
 })
-
-
-
 gsap.to("#page23>img",{
   scrollTrigger:{
     trigger:`#page23>img`,
@@ -568,3 +550,7 @@ gsap.to("#page23>img",{
   },
   opacity:1
 })
+
+
+
+
